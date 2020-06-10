@@ -1,9 +1,22 @@
 const { user } = require("../models")
 
+const helper= require('../helpers')
+
 const {response}=helper
 
 module.exports=
 {
+    read:async(req,res)=>
+    {
+        try
+        {
+            const users=user.findAll();
+            return response(res,200,users)
+        }catch(err)
+        {
+            return response(res,500,{"error":"Internal Server Error"})
+        }
+    },
     destroy:async(req,res)=>
     {
         try
