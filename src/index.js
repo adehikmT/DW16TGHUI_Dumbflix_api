@@ -6,6 +6,7 @@ Route Page
 */
 const Auth=require('./routes/auth')
 const Category=require('./routes/category')
+const User=require('./routes/user')
 // const Episode=require('./routes/episode')
 // const Filem=require('./routes/filem')
 // const Transaction=require('./routes/transaction')
@@ -15,6 +16,7 @@ use Route Page
 */
 Route.use(Auth)
 Route.use(Category)
+Route.use(User)
 // Route.use('/episodes',Episode)
 // Route.use('/filems',Filem)
 // Route.use('/transactions',Transaction)

@@ -1,6 +1,6 @@
 const { user } = require("../models")
 const bcrypt = require('bcrypt')
-const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken")
 //fungsi custome
 const helper=require('../helpers')
 // call obj method
