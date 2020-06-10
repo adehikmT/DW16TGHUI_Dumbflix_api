@@ -61,7 +61,7 @@ module.exports=
             const destroy=await category.destroy({where:{id}})
             if(destroy<1){return response(res,404,{"error":"data not found"})}
             const {name}=req.body
-            return response(res,200,{id,name})
+            return response(res,200,{id})
         }catch(err)
         {
             return response(res,500,{"error":"Internal Server Error"})
