@@ -10,7 +10,11 @@ module.exports=
     {
         try
         {
-            const users= await user.findAll();
+            const users= await user.findAll({
+                attributes: {
+                    exclude: ["role"],
+                  }
+            });
             return response(res,200,users)
         }catch(err)
         {
@@ -23,7 +27,7 @@ module.exports=
         {
             const {id}=req.params
             const destroy=await user.destroy({where:{id}})
-            if(destroy<1){return response(res,404,{"error":"data not found"})}
+            if(destroy<1){return response(res,400,{"error":"data not found"})}
             return response(res,200,{id})
         }catch(err)
         {

@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     role:DataTypes.INTEGER
   }, {});
   user.associate = function(models) {
-    // associations can be defined here
+    user.hasOne(models.transaction)
   };
   return user;
 };

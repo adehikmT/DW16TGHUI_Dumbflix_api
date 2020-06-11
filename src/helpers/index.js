@@ -37,6 +37,28 @@ module.exports=
         name: Joi.string().required()
         });
         return schema.validate(data)
+    },
+    valFilm:async(data)=>
+    {
+        schema=Joi.object({
+            title: Joi.string().required(),
+            thumbnailFilm: Joi.string(),
+            year: Joi.number(),
+            categoryId: Joi.number().required(),
+            description: Joi.string()
+        })
+        return schema.validate(data)
+    },
+    valTrans:async(data)=>
+    {
+        schema=Joi.object({
+            startDate:Joi.string().required(),
+            dueDate:Joi.string().required(),
+            userId: Joi.number().required(),
+            attache:Joi.string().required(),
+            status:Joi.string().required()
+        })
+        return schema.validate(data)
     }
 } 
 
