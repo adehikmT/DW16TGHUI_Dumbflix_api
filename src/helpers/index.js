@@ -59,6 +59,16 @@ module.exports=
             status:Joi.string().required()
         })
         return schema.validate(data)
+    },
+    valEpisode:async(data)=>
+    {
+        schema=Joi.object({
+            title: Joi.string().required(),
+            thumbnailFilem: Joi.string().required(),
+            linkFilem: Joi.string().required(),
+            filemId: Joi.number().required()
+        })
+        return schema.validate(data)
     }
 } 
 

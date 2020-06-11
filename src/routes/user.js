@@ -9,4 +9,4 @@ Route.get('/users',read)
      .delete('/user/:id',authToken,authAdmin,destroy)
 
 module.exports=Route 
- 
+  

@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
         name: "categoryId",
       },
     });
+    // filem.hasOne(models.episode)
+    filem.hasMany(models.episode)
   };
   return filem;
 };

@@ -57,7 +57,7 @@ module.exports=
             const check=await filem.findOne({
             where: { id }
             })
-            if(!check) return response(res,400,{"error":"data not found!"})
+            if(!check) return response(res,400,{"error":"Category not found!"})
             const {error}=await valFilm(req.body)
             if(error) return response(res,400,{"error":error.details[0].message})
             const update=await filem.update(
@@ -88,7 +88,7 @@ module.exports=
         {
             const {id}=req.params
             const destroy=await filem.destroy({where:{id}})
-            if(destroy<1){return response(res,404,{"error":"data not found"})}
+            if(destroy<1){return response(res,404,{"error":"Category not found"})}
             return response(res,200,{id})
         }catch(err)
         {

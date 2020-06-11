@@ -11,4 +11,4 @@ Route.get('/filem',read)
      .patch('/filem/:id',authToken,authAdmin,update)
      .delete('/filem/:id',authToken,authAdmin,destroy)
 module.exports=Route 
- 
+  

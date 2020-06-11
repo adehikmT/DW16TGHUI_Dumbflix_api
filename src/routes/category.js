@@ -10,4 +10,4 @@ Route.get('/category',read)
      .patch('/category/:id',authToken,authAdmin,update)
      .delete('/category/:id',authToken,authAdmin,destroy)
 module.exports=Route 
- 
+  

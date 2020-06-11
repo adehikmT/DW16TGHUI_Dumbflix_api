@@ -12,4 +12,4 @@ Route.post('/registrasi',register)
 
 module.exports=Route 
 
-// chaining method
+// chaining method 
