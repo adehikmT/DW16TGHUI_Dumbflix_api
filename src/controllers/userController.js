@@ -23,7 +23,7 @@ module.exports=
         {
             const {id}=req.params
             const destroy=await user.destroy({where:{id}})
-            if(destroy<1){return response(res,404,{"error":"data not found"})}
+            if(destroy<1){return response(res,400,{"error":"data not found"})}
             return response(res,200,{id})
         }catch(err)
         {

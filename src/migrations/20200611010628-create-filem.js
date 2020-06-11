@@ -11,6 +11,12 @@ module.exports = {
       title: {
         type: Sequelize.STRING
       },
+      thumbnatiFilem:{
+        type: Sequelize.STRING
+      },
+      year:{
+        type: Sequelize.INTEGER
+      },
       idCategory: {
         type: Sequelize.INTEGER,
         allowNull:false,

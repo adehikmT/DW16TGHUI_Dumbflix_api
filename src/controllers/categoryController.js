@@ -38,7 +38,7 @@ module.exports=
             const check=await category.findOne({
             where: { id }
             })
-            if(!check) return response(res,404,{"error":"data not found!"})
+            if(!check) return response(res,400,{"error":"data not found!"})
             const update=await category.update(
                 req.body,
                 {where:{"id":check.id}}
@@ -59,7 +59,7 @@ module.exports=
         {
             const {id}=req.params
             const destroy=await category.destroy({where:{id}})
-            if(destroy<1){return response(res,404,{"error":"data not found"})}
+            if(destroy<1){return response(res,400,{"error":"data not found"})}
             const {name}=req.body
             return response(res,200,{id})
         }catch(err)

@@ -37,6 +37,14 @@ module.exports=
         name: Joi.string().required()
         });
         return schema.validate(data)
+    },
+    valFilem:async(data)=>{
+        schema=Joi.object({
+            title:Joi.string().required(),
+            year:Joi.number(),
+            idCategory:Joi.number().required()            
+        })
+        return schema.validate(data)
     }
 } 
 
