@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   filem.associate = function(models) {
     // associations can be defined here
+    filem.belongsTo(models.category,{
+      foreignKey:'idCategory',
+      as:'category'
+    })
   };
   return filem;
 };

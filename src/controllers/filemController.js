@@ -6,7 +6,11 @@ module.exports=
 {
     read:async(req,res)=>
     {
-      return response(res,200,{"":'rd'})
+        let ok=await filem.findAll({
+            include:[{model:'category'}]
+        })
+        console.log(ok)
+        return response(res,200,{"":'rd'})
     },
     create:async(req,res)=>
     {
