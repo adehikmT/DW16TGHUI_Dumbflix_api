@@ -4,13 +4,13 @@ let dotenv=require('dotenv')
 dotenv.config()
 const morgan=require('morgan')
 const bodyParser=require('body-parser')
-const routeNavigator=require('./src/index')
+const routeNavigator=require('./src')
 
 const app=express()
 
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({extended:true}))
-app.use(express.json());
+app.use(express.json())
 app.use('/api/v1/',routeNavigator)
 
 const server=app.listen(9000,'127.0.0.1',()=>

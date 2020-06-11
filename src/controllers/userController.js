@@ -10,7 +10,7 @@ module.exports=
     {
         try
         {
-            const users=user.findAll();
+            const users= await user.findAll();
             return response(res,200,users)
         }catch(err)
         {
