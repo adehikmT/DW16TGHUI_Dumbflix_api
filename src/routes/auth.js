@@ -7,11 +7,11 @@ const upload=require('../helpers/upload')
 const {response}=require('../helpers')
 
 Route.post('/registration',register)
-     .post('/login',login)
+     .post('/login',login) 
      .post('/logout',logout)
-     .post('/upload',upload,(req,res)=>{ return response(res,200,req.file)})
-     .post('/form',(req,res)=>{
-          response(res,200,req.body)
+     .post('/upload',upload,(req,res)=>{ return response(res,200,req.body)})
+     .post('/form',upload,(req,res)=>{
+          response(res,200,req.file)
           console.log(req.body)
      })
 

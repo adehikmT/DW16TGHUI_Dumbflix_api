@@ -4,6 +4,7 @@ let dotenv=require('dotenv')
 dotenv.config()
 const morgan=require('morgan')
 const app=express()
+const public=__dirname+'/public/'
 
 const bodyParser=require('body-parser')
 app.use(bodyParser.urlencoded({limit:'50mb',extended:false}))
@@ -11,9 +12,10 @@ app.use(bodyParser.json())
 
 app.use(morgan('dev'))
 
-app.use(express.static('public'))
+app.use(express.static(public))
 
 const routeNavigator=require('./src')
+const multer = require('multer')
 app.use('/api/v1/',routeNavigator)
 
 const server=app.listen(9000,'127.0.0.1',()=>  //arrow func ,callback function
@@ -22,6 +24,7 @@ const server=app.listen(9000,'127.0.0.1',()=>  //arrow func ,callback function
     const host=server.address().address
     console.log("server run in "+host+":"+port)
 })
+
 
 // require('./src/config/redis')
 // const cche =require('./src/middleware/chace')

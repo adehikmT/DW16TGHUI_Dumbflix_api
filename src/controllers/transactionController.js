@@ -2,7 +2,7 @@ const { transaction, user } = require("../models")
 //fungsi custome
 const helper=require('../helpers')
 // call obj method
-const {response,valTrans}=helper
+const {response,valTrans,deleteUpload}=helper
 
 const userActive=async(status,id)=>{
     let a=status.toLowerCase()
@@ -47,10 +47,16 @@ module.exports=
         try
         {
             const {error}=await valTrans(req.body)
-            if(error) return response(res,400,{"error":error.details[0].message})
+            if(error){
+              await deleteUpload(req.file.filename)
+              return response(res,400,{"error":error.details[0].message}) 
+            }
             const User= await user.findOne({where:{"id":req.body.userId}})
-            if(!User) return response(res,400,{"message":"User not found"})
-            const Transaction = await transaction.create(req.body)
+            if(!User){
+               await deleteUpload(req.file.filename)
+               return response(res,400,{"message":"User not found"})
+            }
+            const Transaction = await transaction.create({...req.body,attache:req.file.filename})
             await userActive(req.body.status,req.body.userId)
             const inserted = await transaction.findOne({
                 include: {
@@ -67,7 +73,7 @@ module.exports=
             return response(res,200,inserted)
         }catch(err)
         {
-            return response(res,500,{"error":"Internal Server Error"+err})
+            return response(res,500,{"error":"Internal Server Error"})
         }
     },
     update:async(req,res)=>

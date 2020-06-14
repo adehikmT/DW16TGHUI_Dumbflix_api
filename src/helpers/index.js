@@ -1,4 +1,5 @@
 const Joi = require("@hapi/joi");
+const fs = require('fs')
 
 module.exports=
 {
@@ -54,7 +55,7 @@ module.exports=
         schema=Joi.object({
             startDate:Joi.string().required(),
             dueDate:Joi.string().required(),
-            userId: Joi.number().required(),
+            userId: Joi.required(),
             attache:Joi.string().required(),
             status:Joi.string().required()
         })
@@ -69,7 +70,19 @@ module.exports=
             filemId: Joi.number().required()
         })
         return schema.validate(data)
-    }
+    }, 
+    deleteUpload:async(img)=>{
+        fs.stat(__dirname+'../../../public/images/'+img, function (err, stats) {
+        console.log(stats) 
+        if (err) {
+            return console.error(err);
+        }
+        fs.unlink(__dirname+'../../../public/images/'+img,function(err){
+            if(err) return console.log(err);
+            console.log('file deleted successfully');
+        });  
+        })  
+    },
 } 
 
 // response.status(result.status) nyeting agar response codenya sesuai dengan parameter .json(result) 

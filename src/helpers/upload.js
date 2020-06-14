@@ -3,14 +3,14 @@ const path = require('path')
 
 const storage = multer.diskStorage({
     destination(req, file, cb) {
-        cb(null, './public/images')  //destination untuk menyimpan file di server
+        cb(null, __dirname+'../../../public/images')  //destination untuk menyimpan file di server
       },
       filename(req, file, cb) {
         cb(null, `${file.fieldname}-${Date.now()}`+path.extname(file.originalname)) //generate nama filenya kale pake fungsi filename hasilnya akan undifind
       }
 })
 
-const upload = multer({
+const upload=multer({
     storage : storage,
     fileFilter : function(req,file,cb){
         fileTypeCheck(file,cb)
