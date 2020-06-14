@@ -109,6 +109,7 @@ module.exports=
           },
           where:{"id":id}
         });
+        if(!data) return response(res,404,{"error":"Filem not found"})
         return response(res,200,data)
       }catch(err)
       {

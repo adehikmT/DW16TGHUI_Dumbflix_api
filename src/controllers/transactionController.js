@@ -4,6 +4,21 @@ const helper=require('../helpers')
 // call obj method
 const {response,valTrans}=helper
 
+const userActive=async(status,id)=>{
+    let a=status.toLowerCase()
+    if(a==="approve"){
+      await user.update(
+        {"subscibe":1},
+        {where:{"id":id}}
+      )
+    }else{
+      await user.update(
+        {"subscibe":0},
+        {where:{"id":id}}
+      )
+    }
+}
+
 module.exports=
 {
     read:async(req,res)=>
@@ -36,6 +51,7 @@ module.exports=
             const User= await user.findOne({where:{"id":req.body.userId}})
             if(!User) return response(res,400,{"message":"User not found"})
             const Transaction = await transaction.create(req.body)
+            await userActive(req.body.status,req.body.userId)
             const inserted = await transaction.findOne({
                 include: {
                   model: user,
@@ -51,7 +67,7 @@ module.exports=
             return response(res,200,inserted)
         }catch(err)
         {
-            return response(res,500,{"error":"Internal Server Error"})
+            return response(res,500,{"error":"Internal Server Error"+err})
         }
     },
     update:async(req,res)=>
@@ -65,6 +81,7 @@ module.exports=
             if(!check) return response(res,400,{"error":"user not found!"})
             const {error}=await valTrans(req.body)
             if(error) return response(res,400,{"error":error.details[0].message})
+            await userActive(req.body.status,req.body.userId)
             const update=await transaction.update(
                 req.body,
                 {where:{"id":check.id}}
@@ -93,8 +110,12 @@ module.exports=
         try
         {
             const {id}=req.params
+            const userId=await transaction.findOne({
+              where:{id}
+            })
             const destroy=await transaction.destroy({where:{id}})
             if(destroy<1){return response(res,400,{"error":"transaction not found"})}
+            await userActive("Reject",userId.userId)
             return response(res,200,{id})
         }catch(err)
         {

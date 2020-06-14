@@ -4,7 +4,7 @@ module.exports=
 {
     response: (res,status,data,pagination)=>{
         const result={}
-        // result.status=status || 200
+        result.status=status || 200
         result.data=data
         result.pagination=pagination
         return res.status(status).json(result)
@@ -12,7 +12,7 @@ module.exports=
     valRegist:async(data)=>
     { 
         schema = Joi.object({
-        fullName: Joi.string().alphanum().min(3).required(),
+        fullName: Joi.string().min(3).required(),
         email: Joi.string().email().min(6).required(),
         password: Joi.string().min(6).required(),
         gendre:Joi.string(),
@@ -21,7 +21,7 @@ module.exports=
         });
         // console.log(data)
         return schema.validate(data)
-    },
+    }, 
     valLogin:async(data)=>
     { 
         schema = Joi.object({

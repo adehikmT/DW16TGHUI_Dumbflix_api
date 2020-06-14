@@ -13,5 +13,5 @@ module.exports = (sequelize, DataTypes) => {
       },
     });
   };
-  return episode;
+  return episode; 
 };

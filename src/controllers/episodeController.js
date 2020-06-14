@@ -8,12 +8,14 @@ const {response,valEpisode}=helper
 module.exports=
 {
     read:async(req,res)=>
-    {
+    { 
         try
         {
+          const {filemId}=req.params
             const Episode = await episode.findAll({
                 include: {
                   model: filem,
+                  where:{"id":filemId},
                     include:{
                       model:category  
                     },
@@ -23,7 +25,7 @@ module.exports=
                 },
                 attributes: {
                   exclude: ["filemId"],
-                },
+                }
               });
             return response(res,200,Episode)
         }catch(err)
@@ -33,7 +35,7 @@ module.exports=
     },
     create:async(req,res)=>
     {
-        try
+        try 
         {
             const {error}=await valEpisode(req.body)
             if(error) return response(res,400,{"error":error.details[0].message})
@@ -43,6 +45,7 @@ module.exports=
             const inserted = await episode.findOne({
                 include: {
                   model: filem,
+                  where:{"id":Filem.id},
                     include:{
                       model:category  
                     },
@@ -50,7 +53,7 @@ module.exports=
                           exclude: ["categoryId"],
                         },
                 },
-                where:{"id":insert.id},
+                  where:{"id":insert.id},
                   attributes: {
                   exclude: ["filemId"],
                 },
@@ -129,6 +132,7 @@ module.exports=
               exclude: ["filemId"],
             },
           });
+          if(!data) return response(res,200,[])
         return response(res,200,data)
       }catch(err)
       {
