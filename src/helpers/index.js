@@ -42,6 +42,7 @@ module.exports = {
       year: Joi.number(),
       categoryId: Joi.number().required(),
       description: Joi.string(),
+      linkFilm: Joi.string()
     });
     return schema.validate(data);
   },
@@ -49,8 +50,8 @@ module.exports = {
     schema = Joi.object({
       startDate: Joi.string().required(),
       dueDate: Joi.string().required(),
-      userId: Joi.required(),
-      attache: Joi.string().required(),
+      // userId: Joi.required(),
+      // attache: Joi.string().required(),
       status: Joi.string().required(),
     });
     return schema.validate(data);

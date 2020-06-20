@@ -9,7 +9,7 @@ module.exports = {
     try {
       const users = await user.findAll({
         attributes: {
-          exclude: ["role"],
+          exclude: ["role","password"],
         },
       });
       return response(res, 200, users);

@@ -12,7 +12,7 @@ const {
 const { authToken, authAdmin } = require("../middleware/authMiddleware");
 
 Route.get("/film", read)
-  .get("/film/:id", detail)
+  .get("/film/:id",authToken, detail)
   .post("/film", authToken, authAdmin, create)
   .patch("/film/:id", authToken, authAdmin, update)
   .delete("/film/:id", authToken, authAdmin, destroy);

@@ -12,7 +12,7 @@ const userActive = async (status, id) => {
     await user.update({ subscibe: 0 }, { where: { id: id } });
   }
 };
-
+ 
 module.exports = {
   read: async (req, res) => {
     try {
@@ -26,7 +26,7 @@ module.exports = {
           where: User.role === 0 ? { id: User.id } : "",
         },
         attributes: {
-          exclude: ["userId"],
+          exclude: ["userId","password"],
         },
       });
       return response(res, 200, Transaction);
@@ -41,16 +41,23 @@ module.exports = {
         await deleteUpload(req.file.filename);
         return response(res, 400, { error: error.details[0].message });
       }
-      const User = await user.findOne({ where: { id: req.body.userId } });
+      const User = await user.findOne({ where: { id: req.user.id } });
       if (!User) {
         await deleteUpload(req.file.filename);
-        return response(res, 400, { message: "User not found" });
+        return response(res, 400, { error: "User not found" });
       }
+
+      if(User.subscibe){
+        await deleteUpload(req.file.filename);
+        return response(res, 400, { error: "Your active user cannot do transaction now" });
+      }
+
       const Transaction = await transaction.create({
         ...req.body,
+        userId:req.user.id,
         attache: req.file.filename,
       });
-      await userActive(req.body.status, req.body.userId);
+      await userActive(req.body.status, req.user.id);
       const inserted = await transaction.findOne({
         include: {
           model: user,
@@ -59,27 +66,28 @@ module.exports = {
           },
         },
         attributes: {
-          exclude: ["userId"],
+          exclude: ["userId","password"],
         },
         where: { id: Transaction.id },
       });
       return response(res, 200, inserted);
     } catch (err) {
-      return response(res, 500, { error: "Internal Server Error" + err });
+      return response(res, 500, { error: "You Must upload image"});
     }
   },
   update: async (req, res) => {
     try {
       const { id } = req.params;
+      console.log(req.body)
       const check = await transaction.findOne({
         where: { id },
       });
-      if (!check) return response(res, 400, { error: "user not found!" });
-      const { error } = await valTrans(req.body);
-      if (error) return response(res, 400, { error: error.details[0].message });
-      await userActive(req.body.status, req.body.userId);
+      if (!check) return response(res, 400, { error: "transaction not found!" });
+      // const { error } = await valTrans(req.body);
+      // if (error) return response(res, 400, { error: error.details[0].message });
+      await userActive(req.body.status, check.userId);
       const update = await transaction.update(req.body, {
-        where: { id: check.id },
+        where: { id: id },
       });
       if (update < 1)
         return response(res, 201, { message: "request succes but no update" });
@@ -91,13 +99,13 @@ module.exports = {
           },
         },
         attributes: {
-          exclude: ["userId"],
+          exclude: ["userId","password"],
         },
         where: { id: id },
       });
       return response(res, 200, updated);
     } catch (err) {
-      return response(res, 500, { error: "Internal Server Error" });
+      return response(res, 500, { error: "Internal Server Error " + err });
     }
   },
   destroy: async (req, res) => {

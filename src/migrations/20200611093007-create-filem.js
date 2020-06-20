@@ -29,6 +29,9 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
+      linkFilm: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

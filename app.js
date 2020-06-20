@@ -1,9 +1,10 @@
+let path=require("path")
 const express = require("express");
 let dotenv = require("dotenv");
 dotenv.config();
 const morgan = require("morgan");
 const app = express();
-const public = __dirname + "/public/";
+const public = path.join(__dirname,"public") ;
 const cors = require("cors");
 
 app.use(cors());

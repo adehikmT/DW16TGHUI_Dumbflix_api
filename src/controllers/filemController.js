@@ -77,7 +77,7 @@ module.exports = {
       const { id } = req.params;
       const destroy = await filem.destroy({ where: { id } });
       if (destroy < 1) {
-        return response(res, 404, { error: "Category not found" });
+        return response(res, 400, { error: "Film not found" });
       }
       return response(res, 200, { id });
     } catch (err) {
@@ -96,7 +96,7 @@ module.exports = {
         },
         where: { id: id },
       });
-      if (!data) return response(res, 404, { error: "Filem not found" });
+      if (!data) return response(res, 400, { error: "Filem not found" });
       return response(res, 200, data);
     } catch (err) {
       return response(res, 500, { error: "Internal Server Error" });
