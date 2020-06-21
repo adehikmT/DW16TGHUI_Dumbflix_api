@@ -1,4 +1,4 @@
-const { episode, filem, category } = require("../models");
+const { episode, filem, category,user } = require("../models");
 //fungsi custome
 const helper = require("../helpers");
 // call obj method
@@ -8,6 +8,15 @@ const { response, valEpisode } = helper;
 module.exports = {
   read: async (req, res) => {
     try {
+      if(!req.user.id){
+      return response(res, 401, { error: "Aksess Diended" });
+      }
+      const Sub= await user.findOne({
+        where:{"id":req.user.id}
+      })
+      if(!Sub.subscibe){
+      return response(res, 401, { error: "Aksess Diended" });
+      }
       const { filemId } = req.params;
       const Episode = await episode.findAll({
         include: {
@@ -103,6 +112,15 @@ module.exports = {
   },
   detail: async (req, res) => {
     try {
+      if(!req.user.id){
+      return response(res, 401, { error: "Aksess Diended" });
+      }
+      const Sub= await user.findOne({
+        where:{"id":req.user.id}
+      })
+      if(!Sub.subscibe){
+      return response(res, 401, { error: "Aksess Diended" });
+      }
       const { id } = req.params;
       const data = await episode.findOne({
         include: {

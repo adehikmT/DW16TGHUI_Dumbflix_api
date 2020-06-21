@@ -29,6 +29,9 @@ module.exports = {
       status: {
         type: Sequelize.STRING
       },
+       userStatus: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

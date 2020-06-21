@@ -1,4 +1,4 @@
-const { category, filem } = require("../models");
+const { category, filem,user } = require("../models");
 //fungsi custome
 const helper = require("../helpers");
 // call obj method
@@ -86,9 +86,18 @@ module.exports = {
   },
   detail: async (req, res) => {
     try {
+      if(!req.user.id){
+      return response(res, 401, { error: "Aksess Diended" });
+      }
+      const Sub= await user.findOne({
+        where:{"id":req.user.id}
+      })
+      if(!Sub.subscibe){
+      return response(res, 401, { error: "Aksess Diended" });
+      }
       const { id } = req.params;
       const data = await filem.findOne({
-        include: {
+        include: { 
           model: category,
         },
         attributes: {
@@ -99,7 +108,7 @@ module.exports = {
       if (!data) return response(res, 400, { error: "Filem not found" });
       return response(res, 200, data);
     } catch (err) {
-      return response(res, 500, { error: "Internal Server Error" });
+      return response(res, 500, { error: "Internal Server Error"+err });
     }
   },
 };

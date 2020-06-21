@@ -17,6 +17,20 @@ module.exports = {
       return response(res, 500, { error: "Internal Server Error" });
     }
   },
+  detail: async (req,res)=>{
+     try {
+      const {id}=req.user
+      const users = await user.findAll({
+        attributes: {
+          exclude: ["password"],
+        },
+        where:{id}
+      });
+      return response(res, 200, users);
+    } catch (err) {
+      return response(res, 500, { error: "Internal Server Error" });
+    }
+  },
   destroy: async (req, res) => {
     try {
       const { id } = req.params;

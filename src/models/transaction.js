@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     dueDate: DataTypes.STRING,
     userId: DataTypes.INTEGER,
     attache: DataTypes.STRING,
-    status: DataTypes.STRING
+    status: DataTypes.STRING,
+    userStatus:DataTypes.INTEGER,
   }, {});
   transaction.associate = function(models) {
     transaction.belongsTo(models.user, {
